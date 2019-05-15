@@ -26,7 +26,7 @@ var cabinet = require('./nscabinet.js'),
     vinylfs = require('vinyl-fs');
 
 var action = yarr._[0],
-    file = yarr._[1];
+    globs = yarr._.slice(1);
 
 var opts = {
     isCLI : true
@@ -39,11 +39,11 @@ if (opts.rootpath) opts.rootPath = opts.rootpath;
 
 if ( action == 'u' ) {
 
-    vinylfs.src(file).pipe(cabinet(opts));
+    vinylfs.src(globs).pipe(cabinet(opts));
 
 } else if ( action == 'd' ) {
 
-    cabinet.download(file,opts).pipe(vinylfs.dest('.'));
+    cabinet.download(globs[0],opts).pipe(vinylfs.dest('.'));
 
 }
 
